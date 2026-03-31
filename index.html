@@ -1,296 +1,1002 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Head section remains the same -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RETINA Project</title>
-    <style>
-        /* Previous styles remain the same */
-        /* Core styles */
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            line-height: 1.5;
-            margin: 0;
-            color: #515856;
-        }
-        
-        nav {
-            padding: 1rem;
-            background: white;
-            border-bottom: 1px solid #EAECED;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offworld Labs</title>
+  <meta name="description" content="Offworld Labs builds open-source radar infrastructure for scientific research.">
+  <link rel="icon" type="image/png" href="offworldlabs-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..500&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-        }
+    :root {
+      --ink:        #0e0e0c;
+      --ink-2:      #444440;
+      --ink-3:      #888882;
+      --paper:      #f7f6f2;
+      --paper-2:    #edecea;
+      --blue:       #5b8dd9;
+      --blue-dim:   rgba(91,141,217,0.15);
+      --rule:       rgba(14,14,12,0.1);
+      --ff-serif:   'Source Serif 4', Georgia, serif;
+      --ff-sans:    'Inter', system-ui, sans-serif;
+      --ff-mono:    'IBM Plex Mono', monospace;
+    }
 
-        nav a {
-            color: #515856;
-            text-decoration: none;
-        }
+    html { scroll-behavior: smooth; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
+    body {
+      font-family: var(--ff-sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .grid {
-            display: grid;
-            gap: 2rem;
-        }
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(247,246,242,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
+    }
 
-        @media (min-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .grid-3 {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-        }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
 
-        h1, h2, h3, h4 {
-            color: #000;
-            line-height: 1.2;
-            margin: 0 0 1rem 0;
-        }
+    .nav-logo img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
 
-        h1 { font-size: 2.5rem; }
-        h2 { font-size: 2rem; }
-        h3 { font-size: 1.5rem; }
-        h4 { font-size: 1.25rem; }
+    .nav-logo-text {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.75rem;
-        }
-        
-        .feature-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            margin-bottom: 1rem;
-        }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
 
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.25rem;
-            text-decoration: none;
-            transition: background-color 0.2s;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-        }
+    .nav-links a {
+      font-size: 0.82rem;
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color 0.12s;
+    }
+    .nav-links a:hover { color: var(--ink); }
 
-        .btn-primary {
-            background: #2CB191;
-            color: white;
-        }
+    .nav-cta {
+      font-family: var(--ff-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--paper);
+      background: var(--ink);
+      text-decoration: none;
+      padding: 0.45rem 1rem;
+      border-radius: 4px;
+      transition: background 0.12s;
+    }
+    .nav-cta:hover { background: var(--ink-2); }
 
-        .btn-primary:hover {
-            background: #28a385;
-        }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--ink);
+    }
 
-        .btn-secondary {
-            background: #000;
-            color: white;
-        }
+    /* ── Hero ── */
+    #hero {
+      padding: calc(56px + 7rem) 2.5rem 7rem;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
 
-        .btn-secondary:hover {
-            background: #333;
-        }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
 
-        .btn-outline {
-            border: 1px solid #d4d4d4;
-            background: white;
-            color: #000;
-        }
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .btn-outline:hover {
-            background: #f5f5f5;
-        }
+    .hero-visual svg {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+    }
 
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #EAECED;
-            border-radius: 0.25rem;
-            margin-bottom: 1rem;
-        }
+    @keyframes orbit-spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulse-node {
+      0%, 100% { opacity: 0.9; }
+      50%       { opacity: 0.45; }
+    }
 
-        .success-message {
-            display: none;
-            color: #2CB191;
-            text-align: center;
-            padding: 1rem;
-        }
+    h1 {
+      font-family: var(--ff-serif);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 2rem;
+    }
 
-        footer {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: white;
-            border-top: 1px solid #EAECED;
-        }
+    .hero-body {
+      font-size: 1.1rem;
+      color: var(--ink-2);
+      line-height: 1.75;
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+    }
 
-        /* New styles for email protection */
-        .email-protection {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #515856;
-        }
-        .email-protection span {
-            display: none;
-        }
-    </style>
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-dark {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--paper);
+      background: var(--ink);
+      text-decoration: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 4px;
+      transition: background 0.12s;
+    }
+    .btn-dark:hover { background: var(--ink-2); }
+
+    .btn-text {
+      font-size: 0.875rem;
+      color: var(--ink-2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      transition: color 0.12s, border-color 0.12s;
+    }
+    .btn-text:hover { color: var(--ink); border-color: var(--ink-3); }
+
+    /* ── Divider ── */
+    .rule { border: none; border-top: 1px solid var(--rule); }
+
+    /* ── Sections ── */
+    .section {
+      padding: 5rem 2.5rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-meta {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: var(--ff-serif);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .prose {
+      font-size: 1rem;
+      color: var(--ink-2);
+      line-height: 1.8;
+    }
+
+    .prose + .prose { margin-top: 1rem; }
+
+    /* ── About pillars ── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 3rem;
+    }
+
+    .pillar {
+      padding: 2rem 2rem 2rem 0;
+      border-right: 1px solid var(--rule);
+    }
+    .pillar:last-child { border-right: none; padding-right: 0; }
+    .pillar:not(:first-child) { padding-left: 2rem; }
+
+    .pillar-num {
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-3);
+      margin-bottom: 1rem;
+    }
+
+    .pillar-title {
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .pillar-body {
+      font-size: 0.875rem;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+
+    /* ── RETINA section ── */
+    .retina-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .retina-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .fact-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--rule);
+      gap: 1rem;
+    }
+    .fact-row:first-child { border-top: 1px solid var(--rule); }
+
+    .fact-label {
+      font-size: 0.8rem;
+      color: var(--ink-3);
+      font-family: var(--ff-mono);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .fact-value {
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-align: right;
+    }
+
+    .retina-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--blue);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(91,141,217,0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.12s;
+    }
+    .retina-link:hover { border-color: var(--blue); }
+
+    .retina-wide {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .livemap-wrap {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      background: #0a0a0a;
+      aspect-ratio: 4 / 3;
+    }
+
+    .livemap-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .livemap-label {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.6rem;
+      font-family: var(--ff-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      background: rgba(0,0,0,0.5);
+      padding: 0.2rem 0.45rem;
+      border-radius: 3px;
+      z-index: 1;
+    }
+
+    .livemap-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #16a34a;
+      margin-right: 0.3rem;
+      animation: pulse-node 2s ease-in-out infinite;
+    }
+
+    /* ── Use cases ── */
+    .usecase-list {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .usecase-row {
+      display: grid;
+      grid-template-columns: 40px 180px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .usecase-row:first-child { border-top: 1px solid var(--rule); }
+
+    .usecase-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .usecase-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .usecase-title {
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      padding-top: 0.1rem;
+    }
+
+    .usecase-body {
+      font-size: 0.875rem;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+
+    .usecase-cite {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      color: var(--ink-3);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      transition: color 0.12s;
+    }
+    .usecase-cite:hover { color: var(--ink); }
+
+    /* ── Team ── */
+    .team-list {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .team-row {
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .team-row:first-child { border-top: 1px solid var(--rule); }
+
+    .team-name {
+      font-family: var(--ff-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .team-role {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+
+    .team-bio {
+      font-size: 0.875rem;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+
+    .team-gh {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      color: var(--ink-3);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.12s;
+    }
+    .team-gh:hover { color: var(--ink); }
+
+    /* ── Funders ── */
+    .funders-list {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .funder-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2rem;
+      align-items: baseline;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .funder-row:first-child { border-top: 1px solid var(--rule); }
+
+    .funder-name {
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .funder-desc {
+      font-size: 0.875rem;
+      color: var(--ink-2);
+      line-height: 1.65;
+    }
+
+    /* ── Contact ── */
+    .contact-block {
+      margin-top: 2rem;
+    }
+
+    .contact-email-line {
+      font-family: var(--ff-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--ink-2);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-email-line a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      transition: border-color 0.12s;
+    }
+    .contact-email-line a:hover { border-color: var(--ink); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.75rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .footer-left img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      opacity: 0.5;
+    }
+
+    .footer-left span {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color 0.12s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--ink-3);
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-visual { order: -1; }
+      .hero-visual svg { max-width: 340px; }
+      #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      nav { padding: 0 1.5rem; }
+      footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+      .pillars { grid-template-columns: 1fr; }
+      .pillar { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.5rem 0; }
+      .pillar:last-child { border-bottom: none; }
+      .pillar:not(:first-child) { padding-left: 0; }
+
+      .retina-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      .usecase-row { grid-template-columns: 40px 1fr; gap: 0.75rem; }
+      .usecase-row > div:last-child { grid-column: 1 / -1; }
+
+      .team-row { grid-template-columns: 1fr; gap: 0.4rem; }
+      .team-gh { margin-top: 0.5rem; display: inline-block; }
+
+      .funder-row { grid-template-columns: 1fr; gap: 0.35rem; }
+
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: rgba(247,246,242,0.97);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--rule);
+        padding: 1.25rem 1.5rem;
+        gap: 1rem;
+      }
+
+      footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+
+    @media (max-width: 560px) {
+      h1 { font-size: 2.5rem; }
+      .contact-email-line { font-size: 1.15rem; }
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#signup">Sign Up</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
 
-    <!-- Home section remains the same -->
-    <section id="home" class="container">
-        <div class="grid grid-2">
-            <div>
-                <h1>RETINA: <b>R</b>adio <b>E</b>cho <b>T</b>racking with <b>I</b>nter-<b>N</b>ode <b>A</b>nalysis</h1>
-                <p>Existing radio transmissions act as illumination for low-cost passive rooftop radars. Long-range (30 mile+) and accurate without powerful transmitters or FCC licenses needed. Connect to the network to correlate radar hits across the nation.</p>
-                <div style="display: flex; gap: 1rem;">
-                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-                    <a href="https://projects.iq.harvard.edu/sites/projects.iq.harvard.edu/files/galileo/files/s2251171723400044.pdf" class="btn btn-outline">See the Whitepaper</a>
-                </div>
-            </div>
-            <div>
-                <img src="https://storage.mlcdn.com/account_image/1260771/V0Qr0mMb1KcARR6ywweC6OidrZEUgtMedH0502QR.jpg" alt="RETINA visualization">
-            </div>
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="offworldlabs-logo.png" alt="Offworld Labs">
+      <span class="nav-logo-text">Offworld Labs</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#retina">RETINA</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#funders">Funders</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+    <a href="https://retina.fm" class="nav-cta">Deploy a Node →</a>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div>
+        <h1 class="reveal">Building the instruments<br>science is missing.</h1>
+        <p class="hero-body reveal">We're making open-source radar infrastructure for scientific data collection and research. Our work spans RF engineering, distributed systems, and peer-reviewed detection methodology.</p>
+        <div class="hero-actions reveal">
+          <a href="https://retina.fm" class="btn-dark">Deploy a Node →</a>
+          <a href="https://www.theiet.org/media/11278/fm-radio-based-bistatic-radar.pdf" class="btn-text" target="_blank" rel="noopener">Read the science ↗</a>
         </div>
-    </section>
+      </div>
+      <div class="hero-visual reveal">
+        <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <style>
+              @keyframes hero-pulse {
+                0%, 100% { opacity: 0.10; }
+                50% { opacity: 0.05; }
+              }
+              @keyframes hero-ring {
+                0% { r: 10; opacity: 0.3; }
+                100% { r: 55; opacity: 0; }
+              }
+              @keyframes tx-ring {
+                0% { r: 8; opacity: 0.4; }
+                100% { r: 70; opacity: 0; }
+              }
+              .hero-dash { animation: hero-flow 1.4s linear infinite; }
+              @keyframes hero-flow { to { stroke-dashoffset: -16; } }
+            </style>
+          </defs>
 
-    <!-- About section remains the same -->
-    <section id="about" class="container">
-        <div class="grid grid-3">
-            <div>
-                <img src="https://storage.mlcdn.com/account_image/1260771/AakgFV532CqEeRYg4dMGuHHbGJQpXGZKt1vSpH7N.jpg" alt="Hardware setup" class="feature-image">
-                <h4>~$400 in Hardware to Setup</h4>
-                <p>Radar nodes consist of: 1) a single board computer w. accessories 2) Two software defined radios 3) Two antennas</p>
-            </div>
-            <div>
-                <img src="https://storage.mlcdn.com/account_image/1260771/HsSgcKcUinO9A0PeVkqSqYpFzDmC5mHJePdGqp61.png" alt="Software interface" class="feature-image">
-                <h4>Open-source Radar Software</h4>
-                <p>Nodes are preloaded with an OS and <a href="https://github.com/30hours/blah2/blob/main/README.md">open-source radar</a> package to record local objects' range and speed.</p>
-            </div>
-            <div>
-                <img src="https://storage.mlcdn.com/account_image/1260771/4xOCIyjxAdT9a8pGfz93QAeXpWML7fz9qVDCvdbR.png" alt="Data visualization" class="feature-image">
-                <h4>Servers Map Node Data</h4>
-                <p>Nodes sends data to servers that <a href="https://github.com/30hours/3lips/blob/main/README.md">plot radar tracks</a> onto a global map. Data quality continually improves as overlapping nodes come online.</p>
-            </div>
+          <!-- Ground plane -->
+          <line x1="20" y1="360" x2="440" y2="360" stroke="var(--rule)" stroke-width="1"/>
+
+          <!-- FM Transmitter broadcast fill (large) -->
+          <circle cx="230" cy="100" r="180" fill="var(--ink-3)" opacity="0.03"/>
+          <circle cx="230" cy="100" r="180" stroke="var(--ink-3)" stroke-width="0.4" fill="none" opacity="0.08" stroke-dasharray="6 4"/>
+
+          <!-- Detection radii from each receiver node -->
+          <!-- Node A coverage -->
+          <circle cx="100" cy="360" r="150" fill="var(--blue)" opacity="0.05" style="animation: hero-pulse 4s ease-in-out infinite;"/>
+          <circle cx="100" cy="360" r="150" stroke="var(--blue)" stroke-width="0.5" fill="none" opacity="0.12" stroke-dasharray="4 3"/>
+          <!-- Node B coverage -->
+          <circle cx="280" cy="360" r="150" fill="var(--blue)" opacity="0.05" style="animation: hero-pulse 4s ease-in-out 1.3s infinite;"/>
+          <circle cx="280" cy="360" r="150" stroke="var(--blue)" stroke-width="0.5" fill="none" opacity="0.12" stroke-dasharray="4 3"/>
+          <!-- Node C coverage -->
+          <circle cx="400" cy="360" r="130" fill="var(--blue)" opacity="0.05" style="animation: hero-pulse 4s ease-in-out 2.6s infinite;"/>
+          <circle cx="400" cy="360" r="130" stroke="var(--blue)" stroke-width="0.5" fill="none" opacity="0.12" stroke-dasharray="4 3"/>
+
+          <!-- ═══ FM TRANSMITTER (top center) ═══ -->
+          <!-- Tall lattice tower -->
+          <line x1="230" y1="100" x2="230" y2="28" stroke="var(--ink)" stroke-width="2.2"/>
+          <!-- Lattice cross-braces -->
+          <line x1="222" y1="70" x2="230" y2="58" stroke="var(--ink-3)" stroke-width="1"/>
+          <line x1="238" y1="70" x2="230" y2="58" stroke="var(--ink-3)" stroke-width="1"/>
+          <line x1="224" y1="90" x2="230" y2="80" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <line x1="236" y1="90" x2="230" y2="80" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <!-- Antenna tip -->
+          <line x1="230" y1="28" x2="230" y2="16" stroke="var(--ink)" stroke-width="1.2"/>
+          <circle cx="230" cy="14" r="2.5" fill="none" stroke="var(--ink)" stroke-width="1"/>
+          <!-- Broadcast rings emanating -->
+          <circle cx="230" cy="28" r="8" stroke="var(--ink-3)" stroke-width="0.7" fill="none" opacity="0" style="animation: tx-ring 3s ease-out infinite;"/>
+          <circle cx="230" cy="28" r="8" stroke="var(--ink-3)" stroke-width="0.7" fill="none" opacity="0" style="animation: tx-ring 3s ease-out 1s infinite;"/>
+          <circle cx="230" cy="28" r="8" stroke="var(--ink-3)" stroke-width="0.7" fill="none" opacity="0" style="animation: tx-ring 3s ease-out 2s infinite;"/>
+          <!-- Base -->
+          <line x1="218" y1="100" x2="242" y2="100" stroke="var(--ink-3)" stroke-width="1.2"/>
+          <text x="230" y="118" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-3)" letter-spacing="0.06em">FM TRANSMITTER</text>
+
+          <!-- Broadcast signal lines to each node (dashed, subtle) -->
+          <line x1="228" y1="100" x2="100" y2="248" stroke="var(--ink-3)" stroke-width="0.7" stroke-dasharray="5 5" class="hero-dash" opacity="0.2"/>
+          <line x1="232" y1="100" x2="280" y2="248" stroke="var(--ink-3)" stroke-width="0.7" stroke-dasharray="5 5" class="hero-dash" opacity="0.2"/>
+          <line x1="235" y1="100" x2="400" y2="260" stroke="var(--ink-3)" stroke-width="0.7" stroke-dasharray="5 5" class="hero-dash" opacity="0.2"/>
+
+          <!-- ═══ NODE A (left) ═══ -->
+          <line x1="100" y1="360" x2="100" y2="258" stroke="var(--ink-2)" stroke-width="2"/>
+          <!-- Struts -->
+          <line x1="90" y1="310" x2="100" y2="298" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <line x1="110" y1="310" x2="100" y2="298" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <!-- Dual Yagi antennas -->
+          <line x1="86" y1="264" x2="100" y2="258" stroke="var(--blue)" stroke-width="1.3"/>
+          <line x1="100" y1="258" x2="114" y2="264" stroke="var(--blue)" stroke-width="1.3"/>
+          <line x1="88" y1="270" x2="112" y2="270" stroke="var(--blue)" stroke-width="0.9" opacity="0.6"/>
+          <line x1="90" y1="276" x2="110" y2="276" stroke="var(--blue)" stroke-width="0.6" opacity="0.4"/>
+          <!-- Signal rings -->
+          <circle cx="100" cy="260" r="10" stroke="var(--blue)" stroke-width="0.6" fill="none" opacity="0" style="animation: hero-ring 3.5s ease-out infinite;"/>
+          <circle cx="100" cy="260" r="10" stroke="var(--blue)" stroke-width="0.6" fill="none" opacity="0" style="animation: hero-ring 3.5s ease-out 1.2s infinite;"/>
+          <!-- LED -->
+          <circle cx="100" cy="288" r="2.5" fill="#16a34a"/>
+          <text x="100" y="382" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-3)" letter-spacing="0.06em">NODE A</text>
+
+          <!-- ═══ NODE B (center-right) ═══ -->
+          <line x1="280" y1="360" x2="280" y2="248" stroke="var(--ink-2)" stroke-width="2"/>
+          <line x1="270" y1="310" x2="280" y2="298" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <line x1="290" y1="310" x2="280" y2="298" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <line x1="272" y1="330" x2="280" y2="320" stroke="var(--ink-3)" stroke-width="0.6"/>
+          <line x1="288" y1="330" x2="280" y2="320" stroke="var(--ink-3)" stroke-width="0.6"/>
+          <!-- Dual Yagi -->
+          <line x1="266" y1="254" x2="280" y2="248" stroke="var(--blue)" stroke-width="1.3"/>
+          <line x1="280" y1="248" x2="294" y2="254" stroke="var(--blue)" stroke-width="1.3"/>
+          <line x1="268" y1="260" x2="292" y2="260" stroke="var(--blue)" stroke-width="0.9" opacity="0.6"/>
+          <line x1="270" y1="266" x2="290" y2="266" stroke="var(--blue)" stroke-width="0.6" opacity="0.4"/>
+          <circle cx="280" cy="250" r="10" stroke="var(--blue)" stroke-width="0.6" fill="none" opacity="0" style="animation: hero-ring 3.5s ease-out 0.5s infinite;"/>
+          <circle cx="280" cy="250" r="10" stroke="var(--blue)" stroke-width="0.6" fill="none" opacity="0" style="animation: hero-ring 3.5s ease-out 1.7s infinite;"/>
+          <circle cx="280" cy="280" r="2.5" fill="#16a34a"/>
+          <text x="280" y="382" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-3)" letter-spacing="0.06em">NODE B</text>
+
+          <!-- ═══ NODE C (right) ═══ -->
+          <line x1="400" y1="360" x2="400" y2="268" stroke="var(--ink-2)" stroke-width="2"/>
+          <line x1="392" y1="320" x2="400" y2="308" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <line x1="408" y1="320" x2="400" y2="308" stroke="var(--ink-3)" stroke-width="0.8"/>
+          <line x1="388" y1="274" x2="400" y2="268" stroke="var(--blue)" stroke-width="1.3"/>
+          <line x1="400" y1="268" x2="412" y2="274" stroke="var(--blue)" stroke-width="1.3"/>
+          <line x1="390" y1="280" x2="410" y2="280" stroke="var(--blue)" stroke-width="0.9" opacity="0.6"/>
+          <line x1="392" y1="286" x2="408" y2="286" stroke="var(--blue)" stroke-width="0.6" opacity="0.4"/>
+          <circle cx="400" cy="270" r="10" stroke="var(--blue)" stroke-width="0.6" fill="none" opacity="0" style="animation: hero-ring 3.5s ease-out 1s infinite;"/>
+          <circle cx="400" cy="270" r="10" stroke="var(--blue)" stroke-width="0.6" fill="none" opacity="0" style="animation: hero-ring 3.5s ease-out 2.2s infinite;"/>
+          <circle cx="400" cy="296" r="2.5" fill="#16a34a"/>
+          <text x="400" y="382" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-3)" letter-spacing="0.06em">NODE C</text>
+
+          <!-- Overlap zone labels -->
+          <text x="190" y="285" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--blue)" opacity="0.65">overlap</text>
+          <text x="340" y="295" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--blue)" opacity="0.65">overlap</text>
+
+          <!-- Range annotation -->
+          <line x1="100" y1="400" x2="280" y2="400" stroke="var(--ink-3)" stroke-width="0.5"/>
+          <line x1="100" y1="396" x2="100" y2="404" stroke="var(--ink-3)" stroke-width="0.5"/>
+          <line x1="280" y1="396" x2="280" y2="404" stroke="var(--ink-3)" stroke-width="0.5"/>
+          <text x="190" y="416" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-3)">~35 mi range</text>
+
+          <!-- Bottom label -->
+          <text x="230" y="448" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--blue)" letter-spacing="0.08em">DISTRIBUTED PASSIVE RADAR NETWORK</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-meta">About</div>
+        <h2>Open scientific infrastructure</h2>
+        <p class="prose">Offworld Labs is a US-based research and engineering company building open-source radar infrastructure. Our approach combines off-the-shelf RF hardware, crowdsourced deployment, and institutional peer review. The goal is reproducible, chain-of-custody data.</p>
+        <p class="prose">Every node we deploy is a general-purpose passive radar sensor. The same hardware and data pipeline serves research communities across atmospheric science, ecology, remote sensing, and aerial phenomena detection.</p>
+      </div>
+      <div class="usecase-list reveal">
+        <div class="usecase-row">
+          <div class="usecase-icon"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="8" r="2.5" fill="var(--blue)"/><line x1="18" y1="10.5" x2="18" y2="28" stroke="var(--blue)" stroke-width="1" stroke-dasharray="2 2"/><line x1="10" y1="32" x2="26" y2="32" stroke="var(--ink-3)" stroke-width="1"/><circle cx="14" cy="20" r="1.5" fill="var(--ink-3)" opacity="0.5"/><circle cx="22" cy="24" r="1" fill="var(--ink-3)" opacity="0.4"/></svg></div>
+          <div class="usecase-title">Meteor detection</div>
+          <div>
+            <p class="usecase-body">Each node can passively record meteor-trail reflections of FM broadcasts, detecting shower flux rates, radiant positions, and orbital parameters, and integrate these into existing fireball recording networks.</p>
+            <a href="https://www.researchgate.net/publication/283440501_RETRAM_A_network_of_passive_radars_to_detect_and_track_meteors" class="usecase-cite" target="_blank" rel="noopener">Literature ↗</a>
+          </div>
         </div>
-    </section>
-
-    <!-- Signup section remains the same -->
-    <section id="signup" class="container">
-        <div class="grid grid-2">
-            <div>
-                <h3>Join our Mailing List</h3>
-                <p>Sign up for updates on the project.</p>
-                <ul>
-                    <li>Find out about opportunities in the space</li>
-                    <li>Get early access to hardware and data</li>
-                </ul>
-            </div>
-            <div>
-                <form class="ml-subscribe-form">
-                    <div class="ml-form-success" style="display:none;">
-                        <h4>Thank you for subscribing!</h4>
-                    </div>
-                    <div class="ml-form-inputs">
-                        <input type="email" class="ml-input" name="fields.email" placeholder="Email" required>
-                        <input type="text" class="ml-input" name="fields.name" placeholder="Name">
-                        <button type="submit" class="btn btn-secondary ml-form-submit">Subscribe</button>
-                    </div>
-                </form>
-            </div>
+        <div class="usecase-row">
+          <div class="usecase-icon"><svg viewBox="0 0 36 36" fill="none"><path d="M4 26 Q18 10 32 26" stroke="var(--blue)" stroke-width="1" fill="none"/><path d="M8 28 Q18 16 28 28" stroke="var(--blue)" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="10" cy="8" r="4" stroke="#d97706" stroke-width="1" fill="none"/><line x1="10" y1="12" x2="10" y2="16" stroke="#d97706" stroke-width="0.8" stroke-dasharray="1.5 1.5"/><line x1="18" y1="30" x2="18" y2="20" stroke="var(--ink-3)" stroke-width="0.8"/><circle cx="18" cy="18" r="1.5" fill="var(--ink-3)" opacity="0.5"/></svg></div>
+          <div class="usecase-title">Ionospheric monitoring and space weather</div>
+          <div>
+            <p class="usecase-body">The network can continuously map how FM signals propagate through the atmosphere, providing real-time data on solar storm effects that are valuable to satellite operators, launch providers, and GPS services.</p>
+            <a href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2003RS002985" class="usecase-cite" target="_blank" rel="noopener">Literature ↗</a>
+          </div>
         </div>
-    </section>
-
-    <!-- New simplified contact section -->
-    <section id="contact" class="container">
-        <h2 style="text-align: center">Get in touch</h2>
-        <div class="email-protection">
-            <p>To contact us, please email:</p>
-            <p>info [at] offworld<span>null</span>lab [dot] com</p>
+        <div class="usecase-row">
+          <div class="usecase-icon"><svg viewBox="0 0 36 36" fill="none"><path d="M8 18 Q12 12 18 14 Q24 16 28 10" stroke="var(--ink-2)" stroke-width="1.2" fill="none" stroke-linecap="round"/><circle cx="8" cy="18" r="2" fill="var(--blue)"/><circle cx="18" cy="14" r="1.5" fill="var(--blue)" opacity="0.7"/><circle cx="28" cy="10" r="1.5" fill="var(--blue)" opacity="0.5"/><line x1="4" y1="28" x2="32" y2="28" stroke="var(--ink-3)" stroke-width="0.8"/><path d="M4 28 Q10 24 18 25 Q26 26 32 23" stroke="var(--ink-3)" stroke-width="0.6" fill="none" opacity="0.4"/></svg></div>
+          <div class="usecase-title">Bird and bat migration tracking</div>
+          <div>
+            <p class="usecase-body">Migrating flocks produce distinctive low-altitude radar returns that the network can capture seasonally across major flyways, giving ecologists and ornithologists a persistent monitoring layer that no existing infrastructure provides.</p>
+            <a href="https://research.fs.usda.gov/treesearch/32079" class="usecase-cite" target="_blank" rel="noopener">Literature ↗</a>
+          </div>
         </div>
-    </section>
+        <div class="usecase-row">
+          <div class="usecase-icon"><svg viewBox="0 0 36 36" fill="none"><path d="M4 28 L10 20 L16 24 L22 16 L28 18 L32 12" stroke="var(--ink-2)" stroke-width="1" fill="none" stroke-linejoin="round"/><path d="M4 28 L10 20 L16 24 L22 16 L28 18 L32 12 L32 28 Z" fill="var(--blue)" opacity="0.08"/><line x1="4" y1="28" x2="32" y2="28" stroke="var(--ink-3)" stroke-width="0.8"/><circle cx="16" cy="24" r="1.5" fill="var(--blue)" opacity="0.6"/><circle cx="28" cy="18" r="1.5" fill="var(--blue)" opacity="0.6"/></svg></div>
+          <div class="usecase-title">Passive terrain mapping</div>
+          <div>
+            <p class="usecase-body">Overlapping signal pairs can be combined to produce radar imagery of the terrain below, contributing to open topographic datasets without any active transmissions.</p>
+            <a href="https://www.researchgate.net/publication/334679607_Passive_Bistatic_Ground-Based_Synthetic_Aperture_Radar_Concept_System_and_Experiment_Results" class="usecase-cite" target="_blank" rel="noopener">Literature ↗</a>
+          </div>
+        </div>
+        <div class="usecase-row">
+          <div class="usecase-icon"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="12" stroke="var(--blue)" stroke-width="0.8" fill="none"/><circle cx="18" cy="18" r="6" stroke="var(--blue)" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="18" cy="18" r="2" fill="var(--blue)"/><circle cx="24" cy="12" r="2.5" fill="#d97706" opacity="0.7"/><line x1="18" y1="18" x2="24" y2="12" stroke="#d97706" stroke-width="0.6" stroke-dasharray="1.5 1.5"/><text x="28" y="11" font-family="IBM Plex Mono, monospace" font-size="4.5" fill="#d97706">?</text></svg></div>
+          <div class="usecase-title">Unidentified Anomalous Phenomena</div>
+          <div>
+            <p class="usecase-body">Every detection includes a radar track, velocity profile, and signal signature, cross-referenced against flight transponder data and atmospheric conditions, bringing rigor to the study of UAP.</p>
+            <a href="https://projects.iq.harvard.edu/sites/projects.iq.harvard.edu/files/galileo/files/s2251171723400044.pdf" class="usecase-cite" target="_blank" rel="noopener">Literature ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <p>Thanks to Peter Davenport and Mitch Randall for the idea and inspiration. See <a href="https://projects.iq.harvard.edu/sites/projects.iq.harvard.edu/files/galileo/files/s2251171723400044.pdf">Mitch's paper</a> for more information.</p>
-        <hr style="margin: 2rem auto; width: 100%; border: none; border-top: 1px solid #EAECED;">
-        <p>© 2025 Off World Lab. All rights reserved.</p>
-    </footer>
+  <!-- RETINA -->
+  <section id="retina" class="section">
+    <div class="retina-wide">
+      <div class="reveal">
+        <div class="section-meta">Flagship project</div>
+        <h2>RETINA</h2>
+        <p class="prose">Radio Echo Tracking by Inter-Node Analysis. A distributed passive radar network that repurposes ambient FM and DTV broadcast signals as illuminators of opportunity, detecting aerial objects up to 35 miles away without emitting any RF signal. No transmitter. No FCC license. All data open.</p>
+      </div>
+      <div class="retina-layout reveal">
+        <div>
+          <p class="prose">Nodes cross-correlate detections across geography to passively geolocate objects. Planes with ADS-B transponder data act as continual calibration targets and validate radar tracks. Data is logged with cryptographically signed chain-of-custody records for scientific review.</p>
+          <div class="retina-facts" style="margin-top:1.5rem;">
+            <div class="fact-row">
+              <span class="fact-label">Range</span>
+              <span class="fact-value">35+ mi</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Bands</span>
+              <span class="fact-value">VHF / UHF</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Nodes</span>
+              <span class="fact-value">6 active</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">License</span>
+              <span class="fact-value">Open source</span>
+            </div>
+          </div>
+          <a href="https://retina.fm" class="retina-link">retina.fm →</a>
+        </div>
+        <div class="livemap-wrap">
+          <span class="livemap-label"><span class="livemap-dot"></span>Live — Atlanta GA</span>
+          <iframe src="https://radar3.retnode.com/display/detection/delay-doppler/" loading="lazy" title="RETINA live radar display"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Modified script section - removed contact form handling -->
-    <script>
-        window.ml = {};
-        window.ml_webform_success_message = function() {};
+  <!-- Team -->
+  <section id="team" class="section">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-meta">Team</div>
+        <h2>Who we are</h2>
+      </div>
+      <div class="team-list reveal">
+        <div class="team-row">
+          <div>
+            <div class="team-name">Jehan</div>
+            <div class="team-role">Founder &amp; Principal Investigator</div>
+          </div>
+          <p class="team-bio">Launched the RETINA project in 2025, leading hardware specificaion, software architecture, fundrasing and distribution/outreach. Previously engineering director at Bunty LLC and nuclear engineer at Marathon Fusion.</p>
+          <a href="https://github.com/jehanazad" class="team-gh" target="_blank" rel="noopener">↗ jehanazad</a>
+        </div>
+        <div class="team-row">
+          <div>
+            <div class="team-name">Pavlo</div>
+            <div class="team-role">Backend Engineer</div>
+          </div>
+          <p class="team-bio">Python systems specialist. Builds the server-side detection aggregation pipeline, API layer, and data storage architecture underpinning the RETINA network.</p>
+          <a href="https://github.com/pavlodef" class="team-gh" target="_blank" rel="noopener">↗ pavlodef</a>
+        </div>
+        <div class="team-row">
+          <div>
+            <div class="team-name">Sol</div>
+            <div class="team-role">Embedded Systems Engineer</div>
+          </div>
+          <p class="team-bio">Hardware and embedded engineer with a background in audio DSP, consumer electronics, and medical devices. Based in London. Leads hardware design and signal chain work for RETINA nodes.</p>
+          <a href="https://github.com/Sol455" class="team-gh" target="_blank" rel="noopener">↗ Sol455</a>
+        </div>
+        <div class="team-row">
+          <div>
+            <div class="team-name">Jonny</div>
+            <div class="team-role">Software Engineer</div>
+          </div>
+          <p class="team-bio">Full-stack developer working across Go, Python, and JavaScript. Based in London. Builds tracking, data conversion, and visualization tooling for the RETINA pipeline.</p>
+          <a href="https://github.com/jonnyspicer" class="team-gh" target="_blank" rel="noopener">↗ jonnyspicer</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        (function() {
-            function init_webforms() {
-                // Handle subscribe form
-                const subscribeForm = document.querySelector('.ml-subscribe-form');
-                if (subscribeForm) {
-                    subscribeForm.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        const formData = new FormData(subscribeForm);
-                        const data = {};
-                        for (let [key, value] of formData.entries()) {
-                            if (key.includes('.')) {
-                                const [obj, field] = key.split('.');
-                                if (!data[obj]) data[obj] = {};
-                                data[obj][field] = value;
-                            } else {
-                                data[key] = value;
-                            }
-                        }
+  <!-- Funders -->
+  <section id="funders" class="section">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-meta">Supported by</div>
+        <h2>Funders</h2>
+      </div>
+      <div class="funders-list reveal">
+        <div class="funder-row">
+          <div class="funder-name">Emergent Ventures</div>
+          <p class="funder-desc">Grant from the Mercatus Center at George Mason University, supporting high-impact, unconventional research and entrepreneurship.</p>
+        </div>
+        <div class="funder-row">
+          <div class="funder-name">ARDC</div>
+          <p class="funder-desc">Amateur Radio Digital Communications Foundation, supporting the use of amateur radio spectrum and technology in the public interest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                        fetch('https://preview.mailerlite.io/public/1260771/pages/142666287961605870/subscribe?signature=f63f3ee4be1405225f09e0d4ee1d946575e29fa9f7434268be6cef516b3e412e', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(data)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                subscribeForm.querySelector('.ml-form-inputs').style.display = 'none';
-                                subscribeForm.querySelector('.ml-form-success').style.display = 'block';
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                    });
-                }
-            }
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="section-inner reveal">
+      <div class="section-meta">Contact</div>
+      <h2>Get in touch</h2>
+      <p class="prose">For node deployment inquiries, research partnerships, press, or institutional collaboration.</p>
+      <div class="contact-block">
+        <div class="contact-email-line">
+          <a href="mailto:info@offworldlabs.com">info@offworldlabs.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            // Initialize when document is ready
-            if (document.readyState !== 'loading') {
-                init_webforms();
-            } else {
-                document.addEventListener('DOMContentLoaded', init_webforms);
-            }
-        })();
-    </script>
+  <!-- Footer -->
+  <footer>
+    <a href="#" class="footer-left">
+      <img src="offworldlabs-logo.png" alt="Offworld Labs">
+      <span>Offworld Labs LLC</span>
+    </a>
+    <div class="footer-links">
+      <a href="https://github.com/offworldlabs" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://retina.fm">RETINA</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <span class="footer-copy">© 2026 Offworld Labs LLC</span>
+  </footer>
+
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id === '#') return;
+        const t = document.querySelector(id);
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    // Mobile menu
+    const btn = document.getElementById('mobile-menu-btn');
+    const links = document.getElementById('nav-links');
+    btn.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
 </body>
 </html>
